@@ -40,19 +40,18 @@ RAM6^-IREZ, R NEB-^6UR,POLICE OFFICER,POLICE,F,Salary,,KES9335400,
 RAM6^-IREZ,   OHPLODUR,MOTOR TRUCK DRIVER,STREETS & SAN,F,Hourly,40,,&euro;356^-030
 WALK></OSZ,   KECAJ,POLICE OFFICER,POLICE,F,Salary,,KES90024090,
 ";
-//we need a way of spliting the string into rows
+//splitting the string into rows
 $rows= explode('  ', $wambua_corrupted_sample);
-//We have identified that the first row is the table header
-//we then save that row as a variable and delete it from the array
+
 $column_name=explode(',' , $rows[0]);
 array_splice($rows,0,1);
-//This funtion will be used to remove special characters from the string
+//This funtions will be used to remove special characters from the string
 function cleanbody($row_data) {
      $string = preg_replace('/[^A-Za-z0-9\-]/', '',$row_data);
         echo ucwords(strtolower($string));
         }
 
-        function cleanheader($header){
+function cleanheader($header){
              $clean = preg_replace('/[0-9\-]/', '',  preg_replace('/[^a-zA-Z0-9\']/', '',  $header));
 
              echo ucwords(strtolower($clean));
