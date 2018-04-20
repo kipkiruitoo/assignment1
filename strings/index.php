@@ -1,5 +1,12 @@
-<?php 
-$words = "N3AmE,JO9b TitlE32s,Department,Full or= Pa+rt-Time,Salary or Hourly,Typi4>/>cal Hours,Annual Sal>ary,Hou)(rly Rate
+<html>
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+</head>
+<body>
+
+<?php
+$wambua_corrupted_sample = "
+N3AmE,JO9b TitlE32s,Department,Full or= Pa+rt-Time,Salary or Hourly,Typi4>/>cal Hours,Annual Sal>ary,Hou)(rly Rate
 A%5A%ROo4N,  M YREFFEJ,SERGEA%NT,POoLICE,F,SA%lA%ry,,&euro;10144290,
 A%45A%5ROoN,   %ANIR%AK ,POoLICE OoFFICER (&commat;A%SSIGNED A%S DETECTIVE),POoLICE,F,SA%lA%ry,,KES9412299,
 A%A%4ROoN,  R IELR%SEKEBMIK,CHIEF COoNTRA%CT EXPEDITER,GENERA%L SERVICES,F,SA%lA%ry,,KES10159290,
@@ -33,43 +40,62 @@ RAM6^-IREZ, R NEB-^6UR,POLICE OFFICER,POLICE,F,Salary,,KES9335400,
 RAM6^-IREZ,   OHPLODUR,MOTOR TRUCK DRIVER,STREETS & SAN,F,Hourly,40,,&euro;356^-030
 WALK></OSZ,   KECAJ,POLICE OFFICER,POLICE,F,Salary,,KES90024090,
 ";
+//we need a way of spliting the string into rows
+$rows= explode('  ', $wambua_corrupted_sample);
+//We have identified that the first row is the table header
+//we then save that row as a variable and delete it from the array
+$column_name=explode(',' , $rows[0]);
+array_splice($rows,0,1);
+//This funtion will be used to remove special characters from the string
+function cleanbody($row_data) {
+     $string = preg_replace('/[^A-Za-z0-9\-]/', '',$row_data);
+        echo ucwords(strtolower($string));
+        }
 
-// $word = preg_replace('/[0-9]+/', '', $words);
+        function cleanheader($header){
+             $clean = preg_replace('/[0-9\-]/', '',  preg_replace('/[^a-zA-Z0-9\']/', '',  $header));
 
-// echo $words;
-
-
-$words_array = explode(',',$words);
-
-
-// var_dump(count($words_array));
-
-
-$columns = 8;
-
-
-// ?>
-
-<table border="1" cellspacing="10" cellpadding = "10">
-<thead>
-<?php 
-for($i=0;$i<$columns;$i++){
-
-    ?>
-    <th><?php echo ucwords(strtolower($words_array[$i])) ?></th>
-    <?php } ?>
-
+             echo ucwords(strtolower($clean));
+        }
 ?>
+<!--We craete a table to display the data from the row array -->
+<table class="table table-borderd table-striped">
+    <thead>
+          <?php
+          //We loop through the array to get individual column names
+        foreach ($column_name as $column_header){
+            ?>
+         <th>
+            <?php cleanheader($column_header); ?>
+            </th>
+       <?php }
+        ?>
 </thead>
 <tbody>
-<?php
-for($i=9;$i<17;$i++){
-
+     <?php
+      //We loop through the row array to get individual row data
+        foreach ($rows as $row){
+            ?>
+         <tr>
+            <?php
+       //We explode the individual row data by using a ',' to get individual column data
+            $row= explode(',', $row);
+            foreach ($row as $row_data){
 ?>
-<tr>
-<td><?php echo ucwords(strtolower($words_array[$i])) ?></td></tr>
-<?php } ?>
+                 <td>
+                    <?php
+                  cleanbody($row_data); ?>
+                  </td>
+                  <?php
+            }
+             ?>
 
-?>
-</tbody>
+            </tr>
+       <?php }
+        ?>
+    </tbody>
+
 </table>
+    
+</body>
+</html>
