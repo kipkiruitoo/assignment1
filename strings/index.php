@@ -61,4 +61,15 @@ for($i=0;$i<$columns;$i++){
 
 ?>
 </thead>
+<tbody>
+<?php
+for($i=9;$i<17;$i++){
+
+?>
+<tr>
+<td><?php echo ucwords(strtolower($words_array[$i])) ?></td></tr>
+<?php } ?>
+
+?>
+</tbody>
 </table>
