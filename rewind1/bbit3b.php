@@ -61,6 +61,7 @@ ol { list-style: lower-alpha; }
     span{
       color:  #900C3F;
     }
+   
 </style>
 </head>
 <body>
@@ -81,7 +82,7 @@ ol { list-style: lower-alpha; }
   //  url
    $url=array_pop($explodedend);
  $endoffname = strrpos($lastwords, ",");
-   $firstname = str_replace(".'."," - ",substr($lastwords, 0,$endoffname));
+   $firstname = ucwords(strtolower( str_replace(".'."," - ",substr($lastwords, 0,$endoffname))));
 
 // last name 
    $lastparts = substr($lastwords,$endoffname);
@@ -97,7 +98,7 @@ ol { list-style: lower-alpha; }
    <li class="list-group-item"><?php 
   // print_r($explodedline); echo "<br>";
    echo '"'. $quote .'" ';
-    ?> <a href="<?php echo  "h". $url ?>"><?php echo $firstname." " ?></a><?php echo $lname?><span>    ( <?php echo $date ?>)</span> </li>
+    ?> <a  target="_blank" href="<?php echo  "h". $url ?>"><?php echo $firstname." " ?></a><?php echo $lname?><span>    ( <?php echo $date ?>)</span> </li>
 
   <?php }?>
   </ol>
